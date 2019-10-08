@@ -1,6 +1,14 @@
 import firebase from 'https://unpkg.com/@firebase/app@0.x?module'
-import { component, html, useState, useEffect, useContext } from 'https://unpkg.com/haunted/haunted.js?module';
+import { component, html, useState, useEffect, useContext, useRef } from 'https://unpkg.com/haunted/haunted.js?module';
 import { DbContext } from './db-context.js'
+import { directive, AttributePart } from 'https://unpkg.com/lit-html@^1.0.0/lit-html.js';
+
+const ref = directive((refInstance) => (part) => {
+  if (!(part instanceof AttributePart)) {
+    throw new Error('ref directive can only be used as an attribute');
+  }
+  refInstance.current = part.committer.element;
+});
 
 function ChatApp() {
   const [nickname, setNickname] = useState("");
@@ -51,6 +59,14 @@ function ChatApp() {
     }
   };
 
+  const messagesRef = useRef();
+
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return html`
     <div class="App">
       ${!joined
@@ -71,7 +87,7 @@ function ChatApp() {
           `
         : html`
             <div class="chat">
-              <div class="messages">
+              <div class="messages" ref=${ref(messagesRef)}>
                 ${Object.keys(messages).map(message => {
                   if (messages[message]["sender"] === nickname)
                     return html`
