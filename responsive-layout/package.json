@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "dev": "wp --mode development",
+    "prod": "wp --mode production"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.41.0",
+    "webpack-nano": "^0.8.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@stencil/router": "^1.0.1",
+    "haunted": "^4.6.1",
+    "react-media-hook": "^0.4.4",
+    "wc-fontawesome": "^0.1.0"
+  }
+}
